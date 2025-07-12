@@ -18,6 +18,13 @@ class BlogListCreateAPIView(APIView):
         return Response(serializer.data)
     
     def post(self,request):
+        ##Debug : Print token header and user info
+        print("Authorization header:",request.headers.get('Authorization'))
+        print("request.user",request.user)
+        print("request.user.is_authenticated",request.user.is_authenticated)
+        print("🔍 request.user.is_editor:", getattr(request.user, 'is_editor', 'NOT PRESENT'))
+
+        print(request.headers.get('Authorization'))
         if not IsEditorOrAdmin().has_permission(request,self):
             return Response({"detail":"Permission denied"},status=403)
         

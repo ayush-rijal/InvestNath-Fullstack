@@ -8,6 +8,8 @@ interface DecodedToken {
     exp:number
     user_id:number
     username?:string
+    is_staff?:boolean
+    is_editor?:boolean
     [key:string]:unknown
 }
 
@@ -16,6 +18,7 @@ interface AuthContextType {
     token:string | null
     login:(token:string)=>void
     logout:()=>void
+    loading: boolean
 }
 
 const AuthContext=createContext<AuthContextType | undefined>(undefined)
@@ -23,6 +26,7 @@ const AuthContext=createContext<AuthContextType | undefined>(undefined)
 export const AuthProvider=({children}:{children:ReactNode})=>{
     const [user,setUser]=useState<DecodedToken | null>(null)
     const[token,setToken]=useState<string | null>(null)
+    const[loading,setLoading]=useState(true)
 
     useEffect(()=>{
         const storedToken=localStorage.getItem('access')
@@ -32,6 +36,7 @@ export const AuthProvider=({children}:{children:ReactNode})=>{
             setUser(decoded)
 
         }
+        setLoading(false)
         
     },[])
 
@@ -49,7 +54,7 @@ export const AuthProvider=({children}:{children:ReactNode})=>{
     }
 
     return (
-        <AuthContext.Provider value={{user,token,login,logout}}>
+        <AuthContext.Provider value={{user,token,login,logout,loading}}>
          {children}   
         </AuthContext.Provider>
     )

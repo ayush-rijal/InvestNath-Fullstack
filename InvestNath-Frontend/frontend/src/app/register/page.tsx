@@ -34,7 +34,7 @@ export default function RegisterPage(){
             //Save token and redirect
             login(res.data.access)
             toast.success('Registration successful. Logging you in...')
-            router.push('/dashboard')
+            router.push('/blogs')
 
         }
         catch(err:unknown){

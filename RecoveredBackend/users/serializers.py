@@ -10,6 +10,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         #Add custom claims
         token['email']=user.email
         token['username']=user.username
+        token['is_editor']=user.is_editor
         return token
 
 class UserSerializer(serializers.ModelSerializer):
