@@ -4,6 +4,6 @@ class IsEditorOrAdmin(BasePermission):
     def has_permission(self, request, view):
         return(
             request.user and request.user.is_authenticated and (
-                request.user.is_staff or getattr(request.user,'is_editor',False)
+                request.user.is_superuser or getattr(request.user,'is_editor',False)
             )
         )

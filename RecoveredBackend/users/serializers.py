@@ -11,6 +11,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         token['email']=user.email
         token['username']=user.username
         token['is_editor']=user.is_editor
+        token['is_superuser']=user.is_superuser
         return token
 
 class UserSerializer(serializers.ModelSerializer):
@@ -24,6 +25,7 @@ class UserSerializer(serializers.ModelSerializer):
         user=CustomUser.objects.create_user(
             email=validated_data['email'],
             username=validated_data['username'],
-            password=validated_data['password']
+            password=validated_data['password'],
+            
         )
         return user
